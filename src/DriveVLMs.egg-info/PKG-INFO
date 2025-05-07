@@ -1,0 +1,20 @@
+Metadata-Version: 2.4
+Name: DriveVLMs
+Version: 0.2
+Author: bjxx
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Requires-Dist: transformers==4.48.2
+Requires-Dist: accelerate>=1.3.0
+Requires-Dist: soundfile==0.13.1
+Requires-Dist: pillow>=11.1.0
+Requires-Dist: scipy>=1.13.1
+Requires-Dist: torchvision==0.21.0
+Requires-Dist: backoff==2.2.1
+Requires-Dist: peft==0.15.1
+Dynamic: author
+Dynamic: classifier
+Dynamic: requires-dist
+Dynamic: requires-python
