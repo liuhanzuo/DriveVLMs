@@ -15,7 +15,8 @@ setup(
         "scipy>=1.13.1",
         "torchvision==0.21.0",
         "backoff==2.2.1",
-        "peft==0.15.1"
+        "peft==0.15.1",
+        "datasets"
     ],
     classifiers=[
         'Programming Language :: Python :: 3',

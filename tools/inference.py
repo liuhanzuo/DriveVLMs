@@ -79,7 +79,7 @@ def main(args):
 def parse_args():
     parser = argparse.ArgumentParser(description='DriveLM Inference')
     parser.add_argument("--data", type=str, default="data/DriveLM_nuScenes/split/val")
-    parser.add_argument("--collate_fn", type=str, default="drivelm_nus_paligemma_collate_fn_val")
+    parser.add_argument("--collate_fn", type=str, default="drivelm_nus_phi4_collate_fn_val")
     parser.add_argument("--output", type=str, default="data/DriveLM_nuScenes/refs/infer_results_21-49.json")
     parser.add_argument("--device", default="cuda", help="Device to run inference")
     args = parser.parse_args()
