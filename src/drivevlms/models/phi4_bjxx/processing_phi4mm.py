@@ -516,7 +516,7 @@ class Phi4MMProcessor(ProcessorMixin):
 
     attributes = ["image_processor", "audio_processor", "tokenizer"]
     tokenizer_class = "GPT2TokenizerFast"
-    image_processor_class = "AutoImageProcessor"  # Phi4MMImageProcessor will be registered later
+    fast_image_processor_class = "AutoImageProcessor"  # Phi4MMImageProcessor will be registered later
     audio_processor_class = "AutoFeatureExtractor"  # Phi4MMAudioFeatureExtractor will be registered later
 
     def __init__(self, image_processor, audio_processor, tokenizer):

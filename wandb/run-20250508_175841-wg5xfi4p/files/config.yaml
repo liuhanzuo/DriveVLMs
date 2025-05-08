@@ -1,0 +1,110 @@
+_wandb:
+    value:
+        cli_version: 0.19.11
+        m: []
+        python_version: 3.13.2
+        t:
+            "1":
+                - 1
+                - 11
+                - 41
+                - 49
+                - 51
+                - 55
+                - 71
+                - 98
+            "2":
+                - 1
+                - 11
+                - 41
+                - 49
+                - 51
+                - 55
+                - 71
+                - 98
+            "3":
+                - 13
+                - 16
+                - 23
+                - 24
+                - 55
+            "4": 3.13.2
+            "5": 0.19.11
+            "6": 4.48.2
+            "8":
+                - 3
+                - 5
+            "12": 0.19.11
+            "13": windows-amd64
+batch_size_per_gpu:
+    value: 1
+collate_fn_train:
+    value: drivelm_nus_phi4_collate_fn
+collate_fn_val:
+    value: null
+dataset_name:
+    value: data/DriveLM_nuScenes/split/train
+find_unused_parameters:
+    value: true
+fsdp_config:
+    value: null
+gradient_accumulation_steps:
+    value: 4
+gradient_checkpointing:
+    value: true
+image_size:
+    value: 224
+log_steps:
+    value: 10
+lora_alpha:
+    value: 64
+lora_dropout:
+    value: 0.1
+lora_r:
+    value: 32
+lora_target_modules:
+    value:
+        - q_proj
+        - v_proj
+        - vision_projection
+        - text_projection
+lora_task_type:
+    value: CAUSAL_LM
+lr:
+    value: 5e-06
+max_grad_norm:
+    value: 1
+max_seq_length:
+    value: 2048
+model_name:
+    value: microsoft/Phi-4-multimodal-instruct
+model_preparation:
+    value: prepare_model_and_processor_phi4
+num_train_epochs:
+    value: 3
+output_dir:
+    value: /data2/private-data/zhangn/pretrained/phi4/FULL-2025-05-08_17-58
+print_steps:
+    value: 10
+quantization:
+    value: false
+resume_from_checkpoint:
+    value: false
+run_name:
+    value: FULL-2025-05-08_17-58
+save_lora_adapter_when_checkpointing:
+    value: true
+save_steps:
+    value: 500
+seed:
+    value: 42
+use_flash_attention:
+    value: false
+use_lora:
+    value: true
+wandb_project:
+    value: null
+warmup_steps:
+    value: 500
+weight_decay:
+    value: 1e-06

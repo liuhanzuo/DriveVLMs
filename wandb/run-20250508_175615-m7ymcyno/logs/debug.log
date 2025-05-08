@@ -1,0 +1,24 @@
+2025-05-08 17:56:15,459 INFO    MainThread:37320 [wandb_setup.py:_flush():70] Current SDK version is 0.19.11
+2025-05-08 17:56:15,460 INFO    MainThread:37320 [wandb_setup.py:_flush():70] Configure stats pid to 37320
+2025-05-08 17:56:15,460 INFO    MainThread:37320 [wandb_setup.py:_flush():70] Loading settings from C:\Users\pc\.config\wandb\settings
+2025-05-08 17:56:15,460 INFO    MainThread:37320 [wandb_setup.py:_flush():70] Loading settings from D:\DriveVLMs\wandb\settings
+2025-05-08 17:56:15,460 INFO    MainThread:37320 [wandb_setup.py:_flush():70] Loading settings from environment variables
+2025-05-08 17:56:15,460 INFO    MainThread:37320 [wandb_init.py:setup_run_log_directory():724] Logging user logs to D:\DriveVLMs\wandb\run-20250508_175615-m7ymcyno\logs\debug.log
+2025-05-08 17:56:15,460 INFO    MainThread:37320 [wandb_init.py:setup_run_log_directory():725] Logging internal logs to D:\DriveVLMs\wandb\run-20250508_175615-m7ymcyno\logs\debug-internal.log
+2025-05-08 17:56:15,460 INFO    MainThread:37320 [wandb_init.py:init():852] calling init triggers
+2025-05-08 17:56:15,460 INFO    MainThread:37320 [wandb_init.py:init():857] wandb.init called with sweep_config: {}
+config: {'model_name': 'microsoft/Phi-4-multimodal-instruct', 'model_preparation': 'prepare_model_and_processor_phi4', 'collate_fn_train': 'drivelm_nus_phi4_collate_fn', 'collate_fn_val': None, 'use_lora': True, 'lora_r': 32, 'lora_alpha': 64, 'lora_dropout': 0.1, 'lora_target_modules': ['q_proj', 'v_proj', 'vision_projection', 'text_projection'], 'lora_task_type': 'CAUSAL_LM', 'num_train_epochs': 3, 'batch_size_per_gpu': 1, 'gradient_accumulation_steps': 8, 'lr': 5e-06, 'warmup_steps': 500, 'weight_decay': 1e-06, 'max_grad_norm': 1.0, 'seed': 42, 'quantization': False, 'use_flash_attention': False, 'wandb_project': 'DriveVLMs', 'run_name': 'FULL-2025-05-08_17-56', 'output_dir': '/data2/private-data/zhangn/pretrained/phi4/FULL-2025-05-08_17-56', 'save_steps': 500, 'log_steps': 10, 'print_steps': 10, 'resume_from_checkpoint': False, 'save_lora_adapter_when_checkpointing': True, 'find_unused_parameters': True, 'dataset_name': 'data/DriveLM_nuScenes/split/train', 'max_seq_length': 2048, 'image_size': 224, 'gradient_checkpointing': True, 'fsdp_config': None, '_wandb': {}}
+2025-05-08 17:56:15,460 INFO    MainThread:37320 [wandb_init.py:init():893] starting backend
+2025-05-08 17:56:15,460 INFO    MainThread:37320 [wandb_init.py:init():897] sending inform_init request
+2025-05-08 17:56:15,490 INFO    MainThread:37320 [backend.py:_multiprocessing_setup():101] multiprocessing start_methods=spawn, using: spawn
+2025-05-08 17:56:15,490 INFO    MainThread:37320 [wandb_init.py:init():907] backend started and connected
+2025-05-08 17:56:15,491 INFO    MainThread:37320 [wandb_init.py:init():1005] updated telemetry
+2025-05-08 17:56:15,524 INFO    MainThread:37320 [wandb_init.py:init():1029] communicating run to backend with 90.0 second timeout
+2025-05-08 17:56:16,251 INFO    MainThread:37320 [wandb_init.py:init():1104] starting run threads in backend
+2025-05-08 17:56:16,356 INFO    MainThread:37320 [wandb_run.py:_console_start():2573] atexit reg
+2025-05-08 17:56:16,357 INFO    MainThread:37320 [wandb_run.py:_redirect():2421] redirect: wrap_raw
+2025-05-08 17:56:16,357 INFO    MainThread:37320 [wandb_run.py:_redirect():2490] Wrapping output streams.
+2025-05-08 17:56:16,357 INFO    MainThread:37320 [wandb_run.py:_redirect():2513] Redirects installed.
+2025-05-08 17:56:16,359 INFO    MainThread:37320 [wandb_init.py:init():1150] run started, returning control to user process
+2025-05-08 17:56:36,992 INFO    MainThread:37320 [wandb_run.py:_config_callback():1436] config_cb None None {'model_name': 'microsoft/Phi-4-multimodal-instruct', 'model_preparation': 'prepare_model_and_processor_phi4', 'collate_fn_train': 'drivelm_nus_phi4_collate_fn', 'collate_fn_val': None, 'use_lora': True, 'lora_r': 32, 'lora_alpha': 64, 'lora_dropout': 0.1, 'lora_target_modules': ['q_proj', 'v_proj', 'vision_projection', 'text_projection'], 'lora_task_type': 'CAUSAL_LM', 'num_train_epochs': 3, 'batch_size_per_gpu': 1, 'gradient_accumulation_steps': 8, 'lr': 5e-06, 'warmup_steps': 500, 'weight_decay': 1e-06, 'max_grad_norm': 1.0, 'seed': 42, 'quantization': False, 'use_flash_attention': False, 'wandb_project': 'DriveVLMs', 'run_name': 'FULL-2025-05-08_17-56', 'output_dir': '/data2/private-data/zhangn/pretrained/phi4/FULL-2025-05-08_17-56', 'save_steps': 500, 'log_steps': 10, 'print_steps': 10, 'resume_from_checkpoint': False, 'save_lora_adapter_when_checkpointing': True, 'find_unused_parameters': True, 'dataset_name': 'data/DriveLM_nuScenes/split/train', 'max_seq_length': 2048, 'image_size': 224, 'gradient_checkpointing': True, 'fsdp_config': None}
+2025-05-08 17:57:56,612 INFO    MsgRouterThr:37320 [mailbox.py:close():129] [no run ID] Closing mailbox, abandoning 1 handles.

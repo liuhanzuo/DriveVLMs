@@ -1,0 +1,15 @@
+{"time":"2025-05-08T17:58:41.0311956+08:00","level":"INFO","msg":"stream: starting","core version":"0.19.11","symlink path":"D:\\DriveVLMs\\wandb\\run-20250508_175841-wg5xfi4p\\logs\\debug-core.log"}
+{"time":"2025-05-08T17:58:41.447869+08:00","level":"INFO","msg":"created new stream","id":"wg5xfi4p"}
+{"time":"2025-05-08T17:58:41.447869+08:00","level":"INFO","msg":"stream: started","id":"wg5xfi4p"}
+{"time":"2025-05-08T17:58:41.447869+08:00","level":"INFO","msg":"handler: started","stream_id":"wg5xfi4p"}
+{"time":"2025-05-08T17:58:41.447869+08:00","level":"INFO","msg":"sender: started","stream_id":"wg5xfi4p"}
+{"time":"2025-05-08T17:58:41.447869+08:00","level":"INFO","msg":"writer: Do: started","stream_id":"wg5xfi4p"}
+{"time":"2025-05-08T17:58:41.8311092+08:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-08T17:59:59.2846871+08:00","level":"INFO","msg":"stream: closing","id":"wg5xfi4p"}
+{"time":"2025-05-08T17:59:59.2846871+08:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-08T17:59:59.2846871+08:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-08T18:00:00.1597119+08:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-08T18:00:00.5169992+08:00","level":"INFO","msg":"handler: closed","stream_id":"wg5xfi4p"}
+{"time":"2025-05-08T18:00:00.5169992+08:00","level":"INFO","msg":"writer: Close: closed","stream_id":"wg5xfi4p"}
+{"time":"2025-05-08T18:00:00.5169992+08:00","level":"INFO","msg":"sender: closed","stream_id":"wg5xfi4p"}
+{"time":"2025-05-08T18:00:00.5182838+08:00","level":"INFO","msg":"stream: closed","id":"wg5xfi4p"}

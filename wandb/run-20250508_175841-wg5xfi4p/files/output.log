@@ -1,0 +1,64 @@
+C:\Users\pc\miniconda3\Lib\site-packages\transformers-4.48.2-py3.13.egg\transformers\models\auto\image_processing_auto.py:590: FutureWarning: The image_processor_class argument is deprecated and will be removed in v4.42. Please use `slow_image_processor_class`, or `fast_image_processor_class` instead
+  warnings.warn(
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.48, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+C:\Users\pc\.cache\huggingface\modules\transformers_modules\microsoft\Phi-4-multimodal-instruct\607bf62a754018e31fb4b55abbc7d72cce4ffee5\speech_conformer_encoder.py:2775: FutureWarning: Please specify CheckpointImpl.NO_REENTRANT as CheckpointImpl.REENTRANT will soon be removed as the default and eventually deprecated.
+  lambda i: encoder_checkpoint_wrapper(
+Loading checkpoint shards: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3/3 [00:00<00:00,  3.84it/s]
+C:\Users\pc\miniconda3\Lib\site-packages\peft-0.15.1-py3.13.egg\peft\mapping_func.py:73: UserWarning: You are trying to modify a model with PEFT for a second time. If you want to reload the model with a different config, make sure to call `.unload()` before.
+  warnings.warn(
+trainable params: 3,981,312 || all params: 4,650,651,840 || trainable%: 0.0856
+  0%|                                                                                                                                           | 0/17667 [00:00<?, ?it/s][34m[1mwandb[0m: wandb.init() called while a run is active and reinit is set to 'default', so returning the previous run.
+Starting epoch: 1, Global step: 0
+  0%|                                                                                                                               | 1/17667 [00:48<239:14:55, 48.75s/it]Traceback (most recent call last):
+  File "D:\DriveVLMs\tools\lora.py", line 266, in <module>
+    train(args)
+    ~~~~~^^^^^^
+  File "D:\DriveVLMs\tools\lora.py", line 174, in train
+    output = model(**batch)
+  File "C:\Users\pc\miniconda3\Lib\site-packages\torch\nn\modules\module.py", line 1755, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\pc\miniconda3\Lib\site-packages\torch\nn\modules\module.py", line 1766, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\pc\miniconda3\Lib\site-packages\accelerate-1.6.0-py3.13.egg\accelerate\utils\operations.py", line 814, in forward
+    return model_forward(*args, **kwargs)
+  File "C:\Users\pc\miniconda3\Lib\site-packages\accelerate-1.6.0-py3.13.egg\accelerate\utils\operations.py", line 802, in __call__
+    return convert_to_fp32(self.model_forward(*args, **kwargs))
+                           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\pc\miniconda3\Lib\site-packages\torch\amp\autocast_mode.py", line 44, in decorate_autocast
+    return func(*args, **kwargs)
+  File "C:\Users\pc\miniconda3\Lib\site-packages\peft-0.15.1-py3.13.egg\peft\peft_model.py", line 1756, in forward
+    return self.base_model(
+           ~~~~~~~~~~~~~~~^
+        input_ids=input_ids,
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\pc\miniconda3\Lib\site-packages\torch\nn\modules\module.py", line 1755, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\pc\miniconda3\Lib\site-packages\torch\nn\modules\module.py", line 1766, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "C:\Users\pc\miniconda3\Lib\site-packages\peft-0.15.1-py3.13.egg\peft\tuners\tuners_utils.py", line 193, in forward
+    return self.model.forward(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\pc\.cache\huggingface\modules\transformers_modules\microsoft\Phi-4-multimodal-instruct\607bf62a754018e31fb4b55abbc7d72cce4ffee5\modeling_phi4mm.py", line 2141, in forward
+    loss = self.loss_function(logits, labels, self.vocab_size)
+  File "C:\Users\pc\miniconda3\Lib\site-packages\transformers-4.48.2-py3.13.egg\transformers\loss\loss_utils.py", line 47, in ForCausalLMLoss
+    loss = fixed_cross_entropy(shift_logits, shift_labels, num_items_in_batch, ignore_index, **kwargs)
+  File "C:\Users\pc\miniconda3\Lib\site-packages\transformers-4.48.2-py3.13.egg\transformers\loss\loss_utils.py", line 26, in fixed_cross_entropy
+    loss = nn.functional.cross_entropy(source, target, ignore_index=ignore_index, reduction=reduction)
+  File "C:\Users\pc\miniconda3\Lib\site-packages\torch\nn\functional.py", line 3476, in cross_entropy
+    return torch._C._nn.cross_entropy_loss(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<4 lines>...
+        label_smoothing,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+KeyboardInterrupt

@@ -1,0 +1,15 @@
+{"time":"2025-05-08T17:56:15.4920761+08:00","level":"INFO","msg":"stream: starting","core version":"0.19.11","symlink path":"D:\\DriveVLMs\\wandb\\run-20250508_175615-m7ymcyno\\logs\\debug-core.log"}
+{"time":"2025-05-08T17:56:15.9043484+08:00","level":"INFO","msg":"created new stream","id":"m7ymcyno"}
+{"time":"2025-05-08T17:56:15.9043484+08:00","level":"INFO","msg":"stream: started","id":"m7ymcyno"}
+{"time":"2025-05-08T17:56:15.9043484+08:00","level":"INFO","msg":"handler: started","stream_id":"m7ymcyno"}
+{"time":"2025-05-08T17:56:15.9043484+08:00","level":"INFO","msg":"writer: Do: started","stream_id":"m7ymcyno"}
+{"time":"2025-05-08T17:56:15.9043484+08:00","level":"INFO","msg":"sender: started","stream_id":"m7ymcyno"}
+{"time":"2025-05-08T17:56:16.2531655+08:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-05-08T17:57:56.6132908+08:00","level":"INFO","msg":"stream: closing","id":"m7ymcyno"}
+{"time":"2025-05-08T17:57:56.6132908+08:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-05-08T17:57:56.6132908+08:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-05-08T17:57:57.4811808+08:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-05-08T17:57:57.8455459+08:00","level":"INFO","msg":"handler: closed","stream_id":"m7ymcyno"}
+{"time":"2025-05-08T17:57:57.8455459+08:00","level":"INFO","msg":"writer: Close: closed","stream_id":"m7ymcyno"}
+{"time":"2025-05-08T17:57:57.8455459+08:00","level":"INFO","msg":"sender: closed","stream_id":"m7ymcyno"}
+{"time":"2025-05-08T17:57:57.8460495+08:00","level":"INFO","msg":"stream: closed","id":"m7ymcyno"}

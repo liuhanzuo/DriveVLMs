@@ -12,7 +12,10 @@ from functools import partial
 import argparse
 from drivevlms.build import build_collate_fn
 import json
-
+import os
+# os.environ["CUDA_LAUNCH_BLOCKING"] = "1"
+# os.environ["TORCH_USE_CUDA_DSA"] = "1"
+# os.environ["TORCH_CUDA_ARCH_LIST"] = "sm_90"
 @torch.no_grad() 
 def main(args):
     print("Loading model...")

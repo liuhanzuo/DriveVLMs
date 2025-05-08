@@ -1,0 +1,44 @@
+{
+  "os": "Windows-11-10.0.22631-SP0",
+  "python": "CPython 3.13.2",
+  "startedAt": "2025-05-08T09:58:41.030052Z",
+  "args": [
+    "configs\\phi4\\my_config.py"
+  ],
+  "program": "D:\\DriveVLMs\\tools\\lora.py",
+  "codePath": "tools\\lora.py",
+  "git": {
+    "remote": "https://github.com/liuhanzuo/DriveVLMs.git",
+    "commit": "c72a391c379c92c9c6793f872054fea84e0a174b"
+  },
+  "email": "lhz24@mails.tsinghua.edu.cn",
+  "root": "D:\\DriveVLMs",
+  "host": "DESKTOP-PBKS0J8",
+  "executable": "C:\\Users\\pc\\miniconda3\\python.exe",
+  "codePathLocal": "tools\\lora.py",
+  "cpu_count": 16,
+  "cpu_count_logical": 32,
+  "gpu": "NVIDIA GeForce RTX 5090",
+  "gpu_count": 1,
+  "disk": {
+    "/": {
+      "total": "1511201771520",
+      "used": "229086654464"
+    }
+  },
+  "memory": {
+    "total": "100564078592"
+  },
+  "cpu": {
+    "count": 16,
+    "countLogical": 32
+  },
+  "gpu_nvidia": [
+    {
+      "name": "NVIDIA GeForce RTX 5090",
+      "memoryTotal": "34190917632",
+      "cudaCores": 21760
+    }
+  ],
+  "cudaVersion": "12.9"
+}
