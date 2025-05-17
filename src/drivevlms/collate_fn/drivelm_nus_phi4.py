@@ -14,7 +14,7 @@ def format_prompt_phi4(instruction, input=None):
             "<|user|><|image_1|><|image_2|><|image_3|><|image_4|><|image_5|><|image_6|>"
             "Below is an instruction describing a driving perception task, along with six images from different views around the ego vehicle.\n"
             "Each image corresponds to a specific camera: CAM_FRONT, CAM_FRONT_LEFT, CAM_FRONT_RIGHT, CAM_BACK, CAM_BACK_LEFT, CAM_BACK_RIGHT.\n"
-            "Write a response that appropriately completes the request.\n\n"
+            "Write a response that appropriately completes the request. Make your answer precise with no explanation to your answers.\n\n"
             "### Instruction:\n{instruction}\n\n### Response:<|end|><|assistant|>"
         )
     }
@@ -103,11 +103,11 @@ def drivelm_nus_phi4_collate_fn(examples, processor, dtype=torch.float16, *args,
             if torch.all(labels == _IGNORE_INDEX).item():
                 # workaround to make sure loss compute won't fail
                 labels[:, -1] = processor.tokenizer.eos_token_id
-        input_ids_list.append(input_ids)
-        labels_list.append(labels)
-        input_image_embeds_list.append(inputs.input_image_embeds)
-        image_attention_mask_list.append(inputs.image_attention_mask)
-        image_sizes_list.append(inputs.image_sizes)
+        input_ids_list.append(input_ids.squeeze())
+        labels_list.append(labels.squeeze())
+        input_image_embeds_list.append(inputs.input_image_embeds.squeeze())
+        image_attention_mask_list.append(inputs.image_attention_mask.squeeze())
+        image_sizes_list.append(inputs.image_sizes.squeeze())
 
     input_ids = pad_sequence(input_ids_list, padding_side='right', padding_value=0)
     labels = pad_sequence(labels_list, padding_side='right', padding_value=0)
@@ -144,4 +144,36 @@ def drivelm_nus_phi4_collate_fn_val(examples, processor, device):
 
     return tokens, questions, ids
 
+@register_collate_fn
+def drivelm_nus_phi4_collate_fn_val_batched(examples, processor, device):
+    ids = [example["id"] for example in examples]
+    questions = [example["conversations"][0]['value'] for example in examples]
+    prompts = [format_prompt_phi4(example["conversations"][0]['value']) for example in examples]
+    images = []
+    for example in examples:
+        image = [Image.open(example["image_paths"][i]).convert("RGB") for i in range(6)]
+        images.append(image)
+    image = [[img.resize((448, 448), ) for img in _images] for _images in images]
+    tokens = torch.Tensor([processor(
+        text=_text, images=_image, return_tensors="pt", padding="longest"
+    ) for _text, _image in zip(prompts, image)])
 
+    return tokens, questions, ids
+
+@register_collate_fn
+def drivelm_nus_phi4_vllm_collate_fn_val(examples, processor, device):
+    ids = [example["id"] for example in examples]
+    questions = [example["conversations"][0]['value'] for example in examples]
+    prompts = [format_prompt_phi4(example["conversations"][0]['value']) for example in examples]
+    images = []
+    for example in examples:
+        image = [Image.open(example["image_paths"][i]).convert("RGB") for i in range(6)]
+        images.append(image)
+    # Currently only support batchsize = 1
+    # image = [img.resize((448, 448), ) for img in images[0]]
+    image = [[img.resize((448, 448), ) for img in _images] for _images in images]
+    # tokens = processor(
+    #     text=prompts, images=image, return_tensors="pt", padding="longest"
+    # )
+
+    return prompts, image, questions, ids
