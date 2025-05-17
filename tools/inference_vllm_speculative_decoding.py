@@ -37,13 +37,13 @@ def main(args):
         # mm_processor_kwargs={
         #     "padding": "longest",
         # },
-        # speculative_config={
-        #     # "method": "ngram",
-        #     # "num_speculative_tokens": 5,
-        #     # "prompt_lookup_max": 4,
-        #     "model": "data/models/phi-4-multimodal-finetuned-merged-ssd-pruned",
-        #     "num_speculative_tokens": 4,
-        # },
+        speculative_config={
+            # "method": "ngram",
+            # "num_speculative_tokens": 5,
+            # "prompt_lookup_max": 4,
+            "model": "data/models/phi-4-multimodal-finetuned-merged-ssd-pruned",
+            "num_speculative_tokens": 4,
+        },
         max_model_len=4096,
         gpu_memory_utilization=0.45,
         limit_mm_per_prompt={"image": 8, "audio": 0},
