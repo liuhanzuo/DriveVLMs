@@ -1,60 +1,80 @@
 import torch
-from datasets import load_dataset
 from transformers import AutoModelForCausalLM, AutoProcessor
-from drivevlms.models.phi4_bjxx import Phi4MMProcessor, Phi4MMForCausalLM
-from drivevlms.build import build_collate_fn
-
-from llmcompressor import oneshot
-from llmcompressor.modifiers.quantization import GPTQModifier
-from functools import partial
+from optimum.exporters.onnx import main_export
+from optimum.onnxruntime import ORTModelForCausalLM, ORTQuantizer, QuantizationConfig
 from datasets import load_from_disk
+from drivevlms.models.phi4_bjxx import Phi4MMProcessor
+from drivevlms.build import build_collate_fn
+from functools import partial
+from torch.utils.data import DataLoader
 
-NUM_CALIBRATION_SAMPLES = 512
-MAX_SEQUENCE_LENGTH = 8192
+# -----------------------------
+# Constants & Configurations
+# -----------------------------
+MODEL_ID = "microsoft/Phi-4-multimodal-instruct"
+ONNX_EXPORT_DIR = "./onnx_phi4mm"
+QUANTIZED_EXPORT_DIR = "./quantized_phi4mm"
+NUM_CALIBRATION_SAMPLES = 128
 
-# Load model.
-model_id = 'cutebananas/phi-4-multimodal-finetuned'
-model = AutoModelForCausalLM.from_pretrained(
-    'cutebananas/phi-4-multimodal-finetuned',
-    # 'microsoft/Phi-4-multimodal-instruct',
-    torch_dtype=torch.float16, 
-    _attn_implementation='sdpa',
-    trust_remote_code=True,
+# -----------------------------
+# 1. 导出 ONNX 模型
+# -----------------------------
+print("[1] Exporting ONNX...")
+main_export(
+    model_name_or_path=MODEL_ID,
+    output=ONNX_EXPORT_DIR,
+    task="text-generation",
+    device="cuda",
+    fp16=True,
+    trust_remote_code=True
 )
-processor = Phi4MMProcessor.from_pretrained('microsoft/Phi-4-multimodal-instruct')
-# processor.chat_template = processor.tokenizer.chat_template
 
-collate_fn = build_collate_fn('drivelm_nus_phi4_collate_fn')
-train_collate_fn = partial(collate_fn, processor=processor, dtype = torch.float16)
-dataset = load_from_disk('data/DriveLM_nuScenes/split/train')
+# -----------------------------
+# 2. 加载校准数据集
+# -----------------------------
+print("[2] Preparing dataset...")
+raw_dataset = load_from_disk('data/DriveLM_nuScenes/split/train')
+calib_dataset = raw_dataset.shuffle(seed=42).select(range(NUM_CALIBRATION_SAMPLES))
+
+processor = Phi4MMProcessor.from_pretrained(MODEL_ID)
+collate_fn = build_collate_fn('drivelm_nus_phi4_collate_fn_val')
+map_fn = partial(collate_fn, processor=processor, device='cuda')
+
 dataloader = DataLoader(
-    dataset,
+    calib_dataset,
     batch_size=1,
-    collate_fn=train_collate_fn,
+    collate_fn=map_fn,
     num_workers=0,
     shuffle=False,
 )
-dataset = dataset.shuffle(seed = 42).select(range(NUM_CALIBRATION_SAMPLES))
-dataset = dataset.map(train_collate_fn)
 
-# Recipe
-recipe = GPTQModifier(
-    targets="Linear",
-    scheme="W4A16",
-    sequential_targets=["Phi4MMDecoderLayer"],
-    ignore=["lm_head", "re:model.vision_embed_tokens.*"],
+def collated_generator(dataloader):
+    for batch in dataloader:
+        yield batch
+
+# -----------------------------
+# 3. 量化配置并执行
+# -----------------------------
+print("[3] Quantizing...")
+quantizer = ORTQuantizer.from_pretrained(ONNX_EXPORT_DIR)
+
+quant_config = QuantizationConfig(
+    approach="static",
+    per_channel=True,
+    activation_type="uint8",
+    weight_type="int8",
+    reduce_range=True
 )
 
-# Perform oneshot
-oneshot(
-    model=model,
-    dataset=ds,
-    recipe=recipe,
-    max_seq_length=MAX_SEQUENCE_LENGTH,
-    num_calibration_samples=NUM_CALIBRATION_SAMPLES,
-    trust_remote_code_model=True,
+quantizer.quantize(
+    save_dir=QUANTIZED_EXPORT_DIR,
+    calibration_dataset=collated_generator(dataloader),
+    quantization_config=quant_config
 )
 
-SAVE_DIR = "data/models/"+model_id.split("/")[1] + "-W4A16-G128"
-model.save_pretrained(SAVE_DIR, save_compressed=True)
-processor.save_pretrained(SAVE_DIR)
+# -----------------------------
+# 4. 加载量化模型验证
+# -----------------------------
+print("[4] Loading quantized model...")
+quantized_model = ORTModelForCausalLM.from_pretrained(QUANTIZED_EXPORT_DIR)
+print("Quantized model loaded successfully.")

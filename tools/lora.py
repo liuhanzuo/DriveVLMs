@@ -11,7 +11,6 @@ from peft import LoraConfig, get_peft_model
 from drivevlms.build import build_collate_fn, build_preparation
 from drivevlms.utils import (prepare_training_dataloader,
                              prepare_optimizer_and_scheduler,
-                             save_checkpoint,
                              load_checkpoint,
                              save_lora_adapter,
                              write_log_to_json,
@@ -21,6 +20,55 @@ from accelerate.utils import (get_mixed_precision_context_manager,
                               convert_outputs_to_fp32)
 from types import MethodType
 import wandb
+def my_save_checkpoint(accelerator, model, epoch, step, config, loss, checkpoint_dir=None):
+    if checkpoint_dir is None:
+        checkpoint_dir = f"{config.output_dir}/checkpoint"
+    
+    # 检查是否存在之前的训练信息
+    best_loss = float('inf')
+    best_checkpoint = None
+    training_info_file = f"{config.output_dir}/training_info.json"
+    
+    if os.path.exists(training_info_file):
+        with open(training_info_file, "r") as f:
+            training_info = json.load(f)
+            best_loss = training_info.get("loss", float('inf'))
+            best_checkpoint = training_info.get("latest_checkpoint")
+    
+    # 只有当当前 loss 更小时才保存 checkpoint
+    if loss < best_loss:
+        # 删除之前的最优 checkpoint
+        if best_checkpoint is not None and os.path.exists(best_checkpoint):
+            accelerator.print(f"Removing previous best checkpoint {best_checkpoint} as new best loss {loss} < {best_loss}")
+            accelerator.wait_for_everyone()
+            if accelerator.is_main_process:
+                try:
+                    import shutil
+                    shutil.rmtree(best_checkpoint)
+                except Exception as e:
+                    accelerator.print(f"Error removing previous checkpoint: {e}")
+        
+        os.makedirs(checkpoint_dir, exist_ok=True)
+
+        if config.use_lora and config.save_lora_adapter_when_checkpointing:
+            save_lora_adapter(accelerator, model, checkpoint_dir)
+
+        training_info = {
+            "epoch": epoch,
+            "step": step,
+            "loss": loss,
+            "latest_checkpoint": checkpoint_dir,
+        }
+        
+        with open(f"{checkpoint_dir}/training_info.json", "w") as f:
+            json.dump(training_info, f)
+        with open(f"{config.output_dir}/training_info.json", "w") as f:
+            json.dump(training_info, f)
+
+        accelerator.save_state(checkpoint_dir, safe_serialization=False)
+        accelerator.print(f"Saved new best checkpoint at {checkpoint_dir} with loss {loss}")
+    else:
+        accelerator.print(f"Skipping checkpoint save as current loss {loss} >= best loss {best_loss}")
 
 class MyAccelerator(Accelerator):
     def prepare_model(self, model, device_placement=None):
@@ -221,7 +269,7 @@ def train(args):
                         accelerator.wait_for_everyone()
 
                     if global_step % config.save_steps == 0:
-                        save_checkpoint(
+                        my_save_checkpoint(
                             accelerator, model, epoch, global_step, config, loss.item()
                         )
                         # Save LoRA adapter specifically
@@ -233,7 +281,7 @@ def train(args):
 
         # Save at end of each epoch
         epoch_path = f"{config.output_dir}/epoch-{epoch}"
-        save_checkpoint(
+        my_save_checkpoint(
             accelerator, model, epoch, global_step, config, loss.item(), checkpoint_dir=epoch_path
         )
         save_lora_adapter(accelerator, model, epoch_path)

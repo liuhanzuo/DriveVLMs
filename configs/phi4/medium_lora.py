@@ -13,8 +13,8 @@ class DriveLMNusPhi4Config:
     
     # =============== LoRA 专项配置 ===============
     use_lora: bool = True                       # 是否启用LoRA
-    lora_r: int = 32                            # LoRA秩
-    lora_alpha: int = 64                        # LoRA alpha值 (默认建议2倍rank) <<<
+    lora_r: int = 16                            # LoRA秩
+    lora_alpha: int = 32                        # LoRA alpha值 (默认建议2倍rank) <<<
     lora_dropout: float = 0.1                   # LoRA层dropout率 <<<
     lora_target_modules: List[str] = field(
         default_factory=lambda: [
@@ -27,7 +27,7 @@ class DriveLMNusPhi4Config:
     lora_task_type: str = "CAUSAL_LM"           # 任务类型（根据模型调整）<<<
     
     # =============== 训练超参数 ===============
-    num_train_epochs: int = 3
+    num_train_epochs: int = 1
     batch_size_per_gpu: int = 1
     gradient_accumulation_steps: int = 8
     lr: float = 5e-6
@@ -44,7 +44,7 @@ class DriveLMNusPhi4Config:
     # =============== 日志与保存 ===============
     wandb_project: Optional[str] = "DriveVLMs"          # W&B项目名（None则禁用）<<<
     run_name: str = f"FULL-{datetime.now().strftime('%Y-%m-%d_%H-%M')}"
-    output_dir: str = "/data2/private-data/zhangn/pretrained/phi4/" + f"{run_name}"
+    output_dir: str = "~/lora/medium_model/" + f"{run_name}"
     save_steps: int = 500                        # 保存间隔步数
     log_steps: int = 10                          # 日志记录间隔
     print_steps: int = 10                        # 控制台打印间隔
@@ -56,7 +56,7 @@ class DriveLMNusPhi4Config:
 
     # =============== 数据集 ===============
     dataset_name: str = "data/DriveLM_nuScenes/split/train"
-    max_seq_length: int = 2048                   # 最大序列长度 <<<
+    max_seq_length: int = 4096                # 最大序列长度 <<<
     image_size: int = 224                        # 输入图像尺寸 <<<
     
     # =============== 实验性功能 ===============

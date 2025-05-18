@@ -23,6 +23,7 @@ class evaluation_suit():
         for i in range(len(self.accuracy["answer"])):
             answer = self.accuracy["answer"][i]
             GT = self.accuracy["GT"][i]
+            # print(answer,GT,"acc")
             if answer == GT:
                 scores.append(1.0)
             else:
@@ -212,4 +213,5 @@ if __name__ == '__main__':
     # accuracy
     score = output["accuracy"]
     scores.append(score)
-    print(f"score:{score}")
+    # print(f"score:{score}")
+    print(f"score:{scores}")
